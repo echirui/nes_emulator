@@ -9,12 +9,11 @@ module.exports = {
   entry: [
     './src/index'
   ],
-
   module: {
     rules: [{
       test: /\.ts$/,
       use: 'ts-loader',
-      include: ['/Users/echirui/work/nes_enumlator/src']
+      include: ['./src']
     }]
   },
   // import 文で .ts ファイルを解決するため
