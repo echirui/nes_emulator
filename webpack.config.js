@@ -5,7 +5,6 @@ module.exports = {
   mode: 'production',
 
   // メインとなるJavaScriptファイル（エントリーポイント）
-  //entry: './src/index.ts',
   entry: [
     './src/index'
   ],
@@ -13,7 +12,7 @@ module.exports = {
     rules: [{
       test: /\.ts$/,
       use: 'ts-loader',
-      include: ['./src']
+      include: [path.join(__dirname, '/src')],
     }]
   },
   // import 文で .ts ファイルを解決するため
