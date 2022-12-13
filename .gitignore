@@ -2,3 +2,5 @@ node_modules
 dist/main.js
 public/static
 public/dist
+coverage/
+

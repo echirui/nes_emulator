@@ -1,6 +1,4 @@
 
-
-
 import type { Byte, Word } from '../types/common'
 
 

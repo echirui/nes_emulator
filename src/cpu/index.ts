@@ -61,7 +61,8 @@ export default class Cpu {
   opecodeList: Array<OpecodeProps>
   interrupts: Interrupts
 
-  constructor(bus: CpuBus, interrupts: Interrupts) {
+  //constructor(bus: CpuBus, interrupts: Interrupts) {
+  constructor(bus: any, interrupts: Interrupts) {
     this.registers = {
       ...defaultRegisters,
       P: { ...defaultRegisters.P },
