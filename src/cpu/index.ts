@@ -1,5 +1,3 @@
-
-
 import type { Byte, Word } from '../types/common'
 import CpuBus from '../bus/cpu-bus'
 import Interrupts from '../interrupts'
