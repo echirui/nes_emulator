@@ -106,7 +106,7 @@ export default class CanvasRenderer {
           data[index] = color[0];
           data[index + 1] = color[1];
           data[index + 2] = color[2];
-          // data[index + 3] = 0xFF;
+          data[index + 3] = 0xFF;
         }
       }
     }

@@ -89,21 +89,26 @@ export default class Apu {
   }
 
   write(addr: Byte, data: Byte) {
-    // console.log('apu write', addr, data)
+    //console.log('apu write', addr, data)
     // TODO: FIX Perf
     if (addr <= 0x03) {
+      //console.log('squre0')
       // square wave control register
       this.square[0].write(addr, data)
     } else if (addr <- 0x07) {
+      //console.log('squre1')
       // square wave control register
       this.square[1].write(addr - 0x04, data)
     } else if (addr <- 0x0B) {
+      //console.log('triangle')
       // triangle
       this.triangle.write(addr - 0x08, data)
-    } else if (addr <= 0x17) {
+    } else if (addr <= 0x0F) {
+      //console.log('noise')
       // noise
       this.noise.write(addr - 0x0C, data)
     } else if (addr === 0x17) {
+      //console.log('apu write', addr, data)
       this.sequencerMode = data & 0x80 ? 1 : 0
       this.registers[addr] = data
       this.enableIrq = !!(data & 0x40)

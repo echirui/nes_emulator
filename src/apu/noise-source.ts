@@ -36,6 +36,8 @@ export default class NoiseSource {
     this.gain.gain.value = 0.01
     node.connect(this.gain)
     this.bandpass = this.context.createBiquadFilter()
+    this.gain.connect(this.bandpass)
+    this.bandpass.connect(this.context.destination)
     this.source = node
     this.setVolume(0)
     this.source.start(0)
@@ -43,11 +45,11 @@ export default class NoiseSource {
 
   setVolume(volume: number) {
     volume = Math.max(0, Math.min(1, volume))
-    // this.gain.gain.value = volume
+    this.gain.gain.value = volume
   }
 
   setFrequency(frequency: number) {
-    // this.bandpass.frequency.value = frequency > 22050 ? 22050 :frequency
+    this.bandpass.frequency.value = frequency > 22050 ? 22050 :frequency
   }
 
   close() {

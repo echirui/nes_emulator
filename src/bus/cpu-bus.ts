@@ -56,7 +56,7 @@ export default class CpuBus {
   }
 
   writeByCpu(addr: Word, data: Byte) {
-    // console.debug(`cpu:write addr = ${addr.toString(16)}`, data)
+    //console.debug(`cpu:write addr = ${addr.toString(16)}`, data)
     if (addr < 0x0800) {
       // RAM
       this.ram.write(addr, data)
@@ -66,13 +66,14 @@ export default class CpuBus {
     } else if (addr < 0x2008) {
       // PPU
       this.ppu.write(addr - 0x2000, data)
-    } else if (addr >= 0x4000 && addr < 0x4020) {
+    } else if (0x4000 <= addr && addr < 0x4020) {
       if (addr === 0x4014) {
         this.dma.write(data)
       } else if (addr === 0x4016) {
         // TODO Add 2p
         this.keypad.write(data)
       } else {
+        //console.debug(`cpu:write addr = ${addr.toString(16)}`, data)
         // APU
         this.apu.write(addr - 0x4000, data)
       }

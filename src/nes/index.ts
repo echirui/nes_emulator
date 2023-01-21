@@ -101,7 +101,6 @@ export class NES {
       }
       cycle += this.cpu.run()
       const renderingData = this.ppu.run(cycle * 3)
-      //console.debug(renderingData)
       this.apu.run(cycle)
       if (renderingData) {
         this.canvasRenderer.render(renderingData)
