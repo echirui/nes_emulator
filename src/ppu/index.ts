@@ -143,17 +143,17 @@ export default class Ppu {
     this.palette = new Palette()
   }
 
-/*
-    アドレス	略称	RW	名称	内容
-    0x2000	PPUCTRL	W	コントロールレジスタ1	割り込みなどPPUの設定
-    0x2001	PPUMASK	W	コントロールレジスタ2	背景イネーブルなどのPPU設定
-    0x2002	PPUSTATUS	R	PPUステータス	PPUのステータス
-    0x2003	OAMADDR	W	スプライトメモリデータ	書き込むスプライト領域のアドレス
-    0x2004	OAMDATA	RW	デシマルモード	スプライト領域のデータ
-    0x2005	PPUSCROLL	W	背景スクロールオフセット	背景スクロール値
-    0x2006	PPUADDR	W	PPUメモリアドレス	書き込むPPUメモリ領域のアドレス
-    0x2007	PPUDATA	RW	PPUメモリデータ	PPUメモリ領域のデータ
-*/
+  /*
+      アドレス	略称	RW	名称	内容
+      0x2000	PPUCTRL	W	コントロールレジスタ1	割り込みなどPPUの設定
+      0x2001	PPUMASK	W	コントロールレジスタ2	背景イネーブルなどのPPU設定
+      0x2002	PPUSTATUS	R	PPUステータス	PPUのステータス
+      0x2003	OAMADDR	W	スプライトメモリデータ	書き込むスプライト領域のアドレス
+      0x2004	OAMDATA	RW	デシマルモード	スプライト領域のデータ
+      0x2005	PPUSCROLL	W	背景スクロールオフセット	背景スクロール値
+      0x2006	PPUADDR	W	PPUメモリアドレス	書き込むPPUメモリ領域のアドレス
+      0x2007	PPUDATA	RW	PPUメモリデータ	PPUメモリ領域のデータ
+  */
 
   get vramOffset(): Byte {
     return (this.registers[0x00] & 0x04) ? 32 : 1
@@ -222,7 +222,7 @@ export default class Ppu {
   }
 
   get backgroundTableOffset(): Word {
-    return (this.registers[0x00] & 0x10) ? 0x1000: 0x0000
+    return (this.registers[0x00] & 0x10) ? 0x1000 : 0x0000
   }
 
   setVblank() {
@@ -301,7 +301,7 @@ export default class Ppu {
     | 7    | 1: VBlank clear by reading this register    |
     | 6    | 1: sprite hit                               |
     | 5    | 0: less than 8, 1: 9 or more                |
-    | 4-0  | invalid                                     |                                 
+    | 4-0  | invalid                                     |
     |      | bit4 VRAM write flag [0: success, 1: fail]  |
     */
     if (addr === 0x0002) {
@@ -393,8 +393,8 @@ export default class Ppu {
 
   buildSprite(spriteId: number, offset: Word): Sprite {
     const sprite = new Array(8).fill(0).map((): Array<number> => [0, 0, 0, 0, 0, 0, 0, 0,])
-    for (let i = 0; i < 16; i = (i+1)|0) {
-      for (let j = 0; j < 8; j = (j+1)|0) {
+    for (let i = 0; i < 16; i = (i + 1) | 0) {
+      for (let j = 0; j < 8; j = (j + 1) | 0) {
         const addr = spriteId * 16 + i + offset
         const ram = this.readCharacterRAM(addr)
         if (ram & (0x80 >> j)) {
@@ -407,7 +407,7 @@ export default class Ppu {
 
   buildSprites() {
     const offset = (this.registers[0] & 0x08) ? 0x1000 : 0x0000
-    for (let i = 0; i < SPRITES_NUMBER; i = (i+4)|0) {
+    for (let i = 0; i < SPRITES_NUMBER; i = (i + 4) | 0) {
       // INFO: Offset sprite Y position, because First and last 8line is not rendered
       const y = this.spriteRam.read(i) - 8
       if (y < 0) return
@@ -440,10 +440,10 @@ export default class Ppu {
     // fetched from the attribute table.
     const clampedTileY = this.tileY % 30
     const tableIdOffset = (~~(this.tileY / 30) % 2) ? 2 : 0
-    
+
     // background of a line
     // Build viewport + 1 tile for background scroll.
-    for (let x = 0; x < 32 + 1; x = (x+1)|0) {
+    for (let x = 0; x < 32 + 1; x = (x + 1) | 0) {
       const tileX = (x + this.scrollTileX)
       const clampedTileX = tileX % 32
       const nameTableId = (~~(tileX / 32) % 2) + tableIdOffset
@@ -470,9 +470,9 @@ export default class Ppu {
   // Get the pattern of the sprite searched with the remaining clock.
 
   //run(cycle: number): RenderingData {
-  run(cycle: number): {background: any, sprites: any, palette: any} {
+  run(cycle: number): { background: any, sprites: any, palette: any } {
     this.cycle += cycle
-    if(this.line === 0) {
+    if (this.line === 0) {
       this.background.length = 0
       this.buildSprites()
     }
@@ -507,6 +507,6 @@ export default class Ppu {
         }
       }
     }
-  return null
+    return null
   }
 }
